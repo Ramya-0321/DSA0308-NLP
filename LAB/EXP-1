@@ -1,0 +1,32 @@
+import re
+
+text = "I am Ramya wants to travel from Mumbai to Chennai with flight no: 192424183. My mobile number is 9876543210."
+
+print("Original Sentence:")
+print(text)
+
+name = re.search(r"I am (\w+)", text, re.I)
+cities = re.search(r"from (\w+) to (\w+)", text, re.I)
+flight = re.search(r"flight no:\s*(\d+)", text, re.I)
+mobile = re.search(r"mobile number is (\d+)", text, re.I)
+
+print("\nPassenger Details:")
+print("Name:", name.group(1))
+print("From:", cities.group(1))
+print("To:", cities.group(2))
+print("Flight Number:", flight.group(1))
+print("Mobile Number:", mobile.group(1))
+
+new_name = input("\nEnter passenger name: ")
+new_from = input("Enter departure city: ")
+new_to = input("Enter destination city: ")
+new_flight = input("Enter flight number: ")
+new_mobile = input("Enter mobile number: ")
+
+text = re.sub(r"(I am )\w+", lambda m: m.group(1) + new_name, text, count=1, flags=re.I)
+text = re.sub(r"(from )\w+( to )\w+", lambda m: m.group(1) + new_from + m.group(2) + new_to, text, count=1, flags=re.I)
+text = re.sub(r"(flight no:\s*)\d+", lambda m: m.group(1) + new_flight, text, count=1, flags=re.I)
+text = re.sub(r"(mobile number is )\d+", lambda m: m.group(1) + new_mobile, text, count=1, flags=re.I)
+
+print("\nUpdated Sentence:")
+print(text)
