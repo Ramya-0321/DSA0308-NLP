@@ -1,0 +1,30 @@
+def plural_fsm(word):
+
+    word = word.lower()
+
+    if word.endswith(("s", "x", "z", "ch", "sh")):
+        state = "S1"
+        plural = word + "es"
+
+    elif word.endswith("y") and len(word) > 1 and word[-2] not in "aeiou":
+        state = "S2"
+        plural = word[:-1] + "ies"
+
+    elif word in ["leaf", "wolf", "knife", "wife"]:
+        state = "S3"
+        if word.endswith("fe"):
+            plural = word[:-2] + "ves"
+        else:
+            plural = word[:-1] + "ves"
+
+    else:
+        state = "S4"
+        plural = word + "s"
+
+    print("Input Word:", word)
+    print("Final State:", state)
+    print("Plural Form:", plural)
+
+
+noun = input("Enter a singular noun: ")
+plural_fsm(noun)
