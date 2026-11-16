@@ -1,0 +1,32 @@
+
+import re
+
+text = input("Enter a paragraph: ")
+
+sentences = re.split(r'[.!?]+', text)
+sentences = [s.lower().split() for s in sentences if s.strip()]
+
+print("\nCoherence Evaluation:")
+
+if len(sentences) < 2:
+    print("Enter at least two sentences.")
+else:
+    scores = []
+
+    for i in range(len(sentences)-1):
+        w1 = set(sentences[i])
+        w2 = set(sentences[i+1])
+
+        score = len(w1 & w2) / len(w1 | w2)
+        scores.append(score)
+
+        print("Similarity:", round(score, 2))
+
+    average = sum(scores) / len(scores)
+
+    print("Overall Coherence Score:", round(average, 2))
+
+    if average >= 0.2:
+        print("Text is Coherent")
+    else:
+        print("Text has Low Coherence")
