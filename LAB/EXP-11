@@ -1,0 +1,47 @@
+
+grammar = {
+    "S": [["NP", "VP"]],
+    "NP": [["Det", "N"]],
+    "VP": [["V", "NP"], ["V"]],
+    "Det": [["the"], ["a"]],
+    "N": [["cat"], ["dog"], ["ball"]],
+    "V": [["eats"], ["chases"], ["runs"]]
+}
+
+def parse(symbol, words, position):
+
+    if symbol not in grammar:
+        if position < len(words) and words[position] == symbol:
+            return [position + 1]
+        return []
+
+    results = []
+
+    for production in grammar[symbol]:
+
+        positions = [position]
+
+        for item in production:
+            new_positions = []
+
+            for pos in positions:
+                new_positions.extend(parse(item, words, pos))
+
+            positions = new_positions
+
+            if not positions:
+                break
+
+        results.extend(positions)
+
+    return results
+
+
+sentence = input("Enter a sentence: ").lower().split()
+
+result = parse("S", sentence, 0)
+
+if len(sentence) in result:
+    print("Sentence Accepted")
+else:
+    print("Sentence Rejected")
