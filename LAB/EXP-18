@@ -1,0 +1,18 @@
+
+import re
+
+def fopc_parser(expression):
+    pattern = r'forall|exists|and|or|not|implies|[A-Za-z]+\([A-Za-z, ]*\)'
+    
+    tokens = re.findall(pattern, expression)
+
+    print("Logical Expression:", expression)
+    print("\nTokens:")
+    for token in tokens:
+        print(token)
+
+    print("\nParsing Successful!")
+
+expression = input("Enter FOPC expression: ")
+
+fopc_parser(expression)
