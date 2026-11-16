@@ -1,0 +1,21 @@
+
+import spacy
+
+nlp = spacy.load("en_core_web_sm")
+
+text = """
+Sundar Pichai is the CEO of Google.
+Google is located in California.
+He visited London on 15 January 2025.
+"""
+
+doc = nlp(text)
+
+print("NAMED ENTITY RECOGNITION")
+print("-" * 45)
+
+print("{:<25} {:<15}".format("ENTITY", "ENTITY LABEL"))
+print("-" * 45)
+
+for ent in doc.ents:
+    print("{:<25} {:<15}".format(ent.text, ent.label_))
