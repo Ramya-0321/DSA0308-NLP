@@ -1,0 +1,28 @@
+
+import nltk
+from nltk.corpus import wordnet as wn
+
+nltk.download('wordnet')
+nltk.download('omw-1.4')
+
+word = input("Enter a word: ")
+
+synsets = wn.synsets(word)
+
+if synsets:
+    print("\nSynsets and Meanings of", word)
+
+    for syn in synsets:
+        print("\nSynset:", syn.name())
+        print("Definition:", syn.definition())
+
+        print("Examples:", syn.examples())
+
+        synonyms = []
+        for lemma in syn.lemmas():
+            synonyms.append(lemma.name())
+
+        print("Synonyms:", ", ".join(synonyms))
+
+else:
+    print("No synsets found for the given word.")
