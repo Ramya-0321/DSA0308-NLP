@@ -1,0 +1,18 @@
+
+import re
+
+sentence = input("Enter a sentence: ")
+
+pattern = r'\b(the|a|an)\s+\w+(?:\s+\w+)?'
+
+noun_phrases = re.findall(pattern, sentence, re.IGNORECASE)
+
+print("\nNoun Phrases and Their Meanings:")
+
+for phrase in noun_phrases:
+    words = re.search(r'\b(the|a|an)\s+\w+(?:\s+\w+)?',
+                       sentence, re.IGNORECASE)
+    if words:
+        print("Noun Phrase:", words.group())
+        print("Meaning: Identifies a person, place, or thing")
+        sentence = sentence.replace(words.group(), "", 1)
