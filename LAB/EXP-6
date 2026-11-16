@@ -1,0 +1,44 @@
+
+import random
+
+# Sample training text
+text = """
+natural language processing is interesting.
+natural language processing uses machine learning.
+machine learning is useful.
+natural language is important.
+"""
+
+words = text.lower().replace(".", "").split()
+
+bigram_model = {}
+
+for i in range(len(words) - 1):
+    current_word = words[i]
+    next_word = words[i + 1]
+
+    if current_word not in bigram_model:
+        bigram_model[current_word] = []
+
+    bigram_model[current_word].append(next_word)
+
+print("BIGRAM MODEL")
+print("-" * 40)
+
+for word, next_words in bigram_model.items():
+    print("{:<20} {}".format(word, next_words))
+
+current_word = "natural"
+generated_text = [current_word]
+
+for i in range(10):
+    if current_word not in bigram_model:
+        break
+
+    next_word = random.choice(bigram_model[current_word])
+    generated_text.append(next_word)
+    current_word = next_word
+
+print("\nGENERATED TEXT")
+print("-" * 40)
+print(" ".join(generated_text))
