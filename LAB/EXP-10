@@ -1,0 +1,27 @@
+
+words = ["The", "students", "are", "playing", "football"]
+
+tags = ["DT", "NN", "VB", "NN", "NN"]
+
+print("INITIAL TAGGING")
+print("-" * 35)
+
+for word, tag in zip(words, tags):
+    print("{:<15} {}".format(word, tag))
+
+for i in range(len(words)):
+
+    if words[i].endswith("ing"):
+        tags[i] = "VBG"
+
+    elif words[i].endswith("s") and tags[i] == "NN":
+        tags[i] = "NNS"
+
+    elif words[i].lower() == "are":
+        tags[i] = "VBP"
+
+print("\nFINAL TAGGING")
+print("-" * 35)
+
+for word, tag in zip(words, tags):
+    print("{:<15} {}".format(word, tag))
