@@ -1,0 +1,16 @@
+
+import re
+
+text = input("Enter a sentence: ")
+
+nouns = re.findall(r'\b[A-Z][a-z]+\b', text)
+
+pronouns = re.findall(r'\b(he|she|it|they)\b', text, re.IGNORECASE)
+
+print("\nReference Resolution:")
+
+for pronoun in pronouns:
+    if nouns:
+        print(pronoun, "refers to", nouns[0])
+    else:
+        print(pronoun, "Reference not found")
