@@ -1,0 +1,40 @@
+
+import math
+from collections import Counter
+
+documents = [
+    "Python is a programming language",
+    "Machine learning uses Python",
+    "Java is used for software development",
+    "Information retrieval finds relevant documents"
+]
+
+query = input("Enter search query: ").lower()
+
+N = len(documents)
+idf = {}
+
+words = set(" ".join(documents).lower().split())
+
+for word in words:
+    count = sum(word in doc.lower().split() for doc in documents)
+    idf[word] = math.log((N + 1) / (count + 1)) + 1
+
+scores = []
+
+for doc in documents:
+    tf = Counter(doc.lower().split())
+    query_words = query.split()
+
+    score = sum(tf[word] * idf.get(word, 0)
+                for word in query_words)
+
+    scores.append(score)
+
+ranking = sorted(range(N),
+                 key=lambda i: scores[i], reverse=True)
+
+print("\nDocument Ranking:")
+
+for i in ranking:
+    print(documents[i], "Score:", round(scores[i], 3))
