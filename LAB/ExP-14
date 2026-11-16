@@ -1,0 +1,39 @@
+import nltk
+
+grammar = nltk.CFG.fromstring("""
+    S -> SingularNP SingularVP
+    S -> PluralNP PluralVP
+
+    SingularNP -> SingularDet SingularN
+    PluralNP -> PluralDet PluralN
+
+    SingularVP -> SingularV
+    PluralVP -> PluralV
+
+    SingularDet -> 'the' | 'a'
+    PluralDet -> 'the'
+
+    SingularN -> 'boy' | 'girl' | 'student'
+    PluralN -> 'boys' | 'girls' | 'students'
+
+    SingularV -> 'plays' | 'runs' | 'eats'
+    PluralV -> 'play' | 'run' | 'eat'
+""")
+
+parser = nltk.ChartParser(grammar)
+
+sentence = input("Enter a sentence: ").lower().split()
+
+trees = list(parser.parse(sentence))
+
+if trees:
+    print("\nSentence is grammatically correct.")
+    print("\nParse Tree:")
+
+    for tree in trees:
+        print(tree)
+        tree.pretty_print()
+
+else:
+    print("\nSentence is grammatically incorrect.")
+    print("Subject-Verb Agreement Error!")
