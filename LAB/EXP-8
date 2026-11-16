@@ -1,0 +1,56 @@
+
+from collections import defaultdict, Counter
+
+training_data = [
+    [("the", "DT"), ("cat", "NN"), ("sleeps", "VBZ")],
+    [("the", "DT"), ("dog", "NN"), ("runs", "VBZ")],
+    [("a", "DT"), ("boy", "NN"), ("plays", "VBZ")],
+    [("the", "DT"), ("girl", "NN"), ("plays", "VBZ")],
+    [("a", "DT"), ("cat", "NN"), ("runs", "VBZ")]
+]
+
+tag_counts = Counter()
+word_tag_counts = defaultdict(Counter)
+
+for sentence in training_data:
+    for word, tag in sentence:
+        tag_counts[tag] += 1
+        word_tag_counts[word][tag] += 1
+
+emission_prob = {}
+
+for word, tags in word_tag_counts.items():
+    total = sum(tags.values())
+
+    for tag, count in tags.items():
+        emission_prob[(word, tag)] = count / total
+
+def stochastic_pos_tag(sentence):
+
+    words = sentence.lower().split()
+    result = []
+
+    for word in words:
+
+        if word in word_tag_counts:
+            best_tag = max(
+                word_tag_counts[word],
+                key=lambda tag: emission_prob[(word, tag)]
+            )
+        else:
+            best_tag = "NN"
+
+        result.append((word, best_tag))
+
+    return result
+
+
+text = "the cat runs"
+
+tagged_words = stochastic_pos_tag(text)
+
+print("WORD                 POS TAG")
+print("--------------------------------")
+
+for word, tag in tagged_words:
+    print("{:<20} {}".format(word, tag))
