@@ -1,0 +1,31 @@
+
+def recognize_dialog_act(sentence):
+    sentence = sentence.lower().strip()
+
+    if any(word in sentence for word in ["hello", "hi", "good morning"]):
+        return "Greeting"
+
+    elif sentence.endswith("?"):
+        return "Question"
+
+    elif any(word in sentence for word in ["please", "could you", "can you"]):
+        return "Request"
+
+    elif any(word in sentence for word in ["thank you", "thanks"]):
+        return "Thanking"
+
+    elif any(word in sentence for word in ["bye", "goodbye"]):
+        return "Farewell"
+
+    else:
+        return "Statement"
+
+
+dialog = input("Enter a dialog: ")
+
+print("\nDialog Act Recognition:")
+
+for sentence in dialog.split("."):
+    if sentence.strip():
+        act = recognize_dialog_act(sentence)
+        print(sentence.strip(), ":", act)
